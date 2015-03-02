@@ -1,0 +1,47 @@
+fileTypes: [
+  "edi"
+  "hl7"
+]
+name: "HL7"
+patterns: [
+  {
+    match: "^(.*?)(\\|)"
+    captures:
+      "1":
+        name: "keyword.operator.hl7"
+      "2":
+        name: "constant.character.hl7"
+  }
+  {
+    match: "(\\^|~|&)"
+    name: "string.other.hl7"
+  }
+  {
+    begin: "(\\|)(ADT|MDM|MFN|PPR|OMG|ORU|ORM|REF|ACK|DFT)...."
+    beginCaptures:
+      "1":
+        name: "constant.character.hl7"
+      "2":
+        name: "support.function.hl7"
+    end: "(\\|)"
+    name: "constant.character.hl7"
+    patterns: [
+      {
+        captures:
+          "1":
+            name: "support.function.hl7"
+        match: "(.*?)"
+      }
+    ]
+  }
+  {
+    comment: "DateTime"
+    match: "(([1][9]|[2][0])\\d{2})(?:\\-)?([0]{1}\\d{1}|[1]{1}[0-2]{1})(?:\\-)?([0-2]{1}\\d{1}|[3]{1}[0-1]{1})(?:\\s)?(([0-1]{1}\\d{1}|[2]{1}[0-3]{1})(?::)?([0-5]{1}\\d{1})(?::)?([0-5]{1}\\d{1})([0-5]{1}\\d{1})?)?"
+    name: "entity.other.inherited-class.hl7"
+  }
+  {
+    match: "\\|"
+    name: "constant.character.hl7"
+  }
+]
+scopeName: "text.hl7"
