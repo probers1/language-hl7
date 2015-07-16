@@ -7,25 +7,31 @@ patterns: [
   {
     ###
     Very clearly identify HL7 segments so we can tell when them apart in the event
-    that they are get nested for some reason
+    that they are get nested for some reason (it happens)
     ###
     comment: "SegmentOptions"
     match: "(DG1|EVN|GT1|IN1|MSH|NK1|NTE|OBR|OBX|ORC|PID|PV1|PV2|FT1)"
-    name: "keyword.control.hl7.segments"
+    name: "entity.name.type"
   }
   {
-    match: "^(.*?)(\\|)"
-    captures:
-      "1":
-        name: "keyword.operator.hl7"
-      "2":
-        name: "constant.character.hl7"
+    ###
+    Identify HL7 characters that have been escaped.
+    ###
+    comment: "EscapeSequences"
+    match: "(\\\\.+\\\\)"
+    name: "constant.numeric"
   }
   {
+    ###
+    Identify all HL7 special characters
+    ###
     match: "(\\^|~|\\\\|&)"
     name: "string.other.hl7"
   }
   {
+    ###
+    Grabs the type of message and the associated trigger type
+    ###
     begin: "(\\|)(ADT|MDM|MFN|PPR|OMG|ORU|ORM|REF|ACK|DFT)...."
     beginCaptures:
       "1":
@@ -44,11 +50,17 @@ patterns: [
     ]
   }
   {
+    ###
+    HL7 follows YYYYMMDDHHMMSSsss
+    ###
     comment: "DateTime"
     match: "(((19|20)\\d\\d)(0?[1-9]|1[012])(0?[1-9]|[12][0-9]|3[01])([01]?[0-9]|2[0-3])?([0-5][0-9])?([0-5][0-9])?([0-5][0-9])?([0-9][0-9][0-9][0-9][0-9][0-9]?[0-9]?)?)"
     name: "entity.other.inherited-class.hl7"
   }
   {
+    ###
+    Social for those of us in the states
+    ###
     comment: "SSN"
     begin: "(\\|){1}(\\d{3}(-?)\\d{2}(-?)\\d{4})(\\^|\\|){1}"
     beginCaptures:
@@ -68,11 +80,17 @@ patterns: [
     ]
   }
   {
+    ###
+    Attempt to identify phone numbers country codes accounted for somewhat
+    ###
     comment: "PhoneNum"
-    match: "((\\(?)\\d{3}(\\)?)[-|\\^]?\\d{3}[-]?\\d{4})"
+    match: "(\\d{3}?(\\(?)\\d{3}(\\)?)[-|\\^]?\\d{3}[-]?\\d{4})"
     name: "support.function.hl7"
   }
   {
+    ###
+    Identify all separators
+    ###
     match: "\\|"
     name: "constant.character.hl7"
   }
