@@ -11,7 +11,7 @@ patterns: [
     ###
     comment: "SegmentOptions"
     match: "(DG1|EVN|GT1|IN1|MSH|NK1|NTE|OBR|OBX|ORC|PID|PV1|PV2|FT1)"
-    name: "entity.name.type"
+    name: "entity.name.type.hl7.segment"
   }
   {
     ###
