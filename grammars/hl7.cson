@@ -84,7 +84,7 @@ patterns: [
     Attempt to identify phone numbers country codes accounted for somewhat
     ###
     comment: "PhoneNum"
-    match: "(\\d{3}?(\\(?)\\d{3}(\\)?)[-|\\^]?\\d{3}[-]?\\d{4})"
+    match: "(\\d{0,3}?(\\(?)\\d{3}(\\)?)[-|\\^]?\\d{3}[-]?\\d{4})"
     name: "support.function.hl7"
   }
   {
@@ -99,7 +99,7 @@ patterns: [
     Attempts to capture all instaces of where a patient id was found
     ###
     comment: "PatientIdentifier"
-    match: "((\\d+(\\^\\^\\^)(.[^\\\|^]+))+)"
+    match: "((\\d+(\\^\\^\\^)(.[^\\|^]+))+)"
     name: "support.function.hl7"
   }
 ]

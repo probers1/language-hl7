@@ -29,3 +29,10 @@ describe "HL7 grammar", ->
     """
 
     expect(lines[0][61]).toEqual value: "333-33-3333", scopes: ["text.hl7", "constant.character.hl7", "entity.other.inherited-class.hl7"]
+
+  it "determines the patient id"
+    lines = grammar.tokenizeLines """
+      PID|0001|553894234^^^2.16.840.1.113883.3.779.1^^2.16.840.1.113883.3.779.1|553894234^^^2.16.840.1.113883.3.779.1^^2.16.840.1.113883.3.779.1||ARIEL^MICKEY^D||20001230|F||W|123 TEST STREET^^KANSAS CITY^MO^31206^USA^^BIBB||4787885946|1(667)123-5781||M|MET||123567
+    """
+
+    expect(lines[0][3]).toEqual value: "98048108^^^2.16.840.1.113883.3.779.1", scopes: ["text.hl7", "support.function.hl7"]
