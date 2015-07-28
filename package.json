@@ -1,13 +1,13 @@
 {
   "name": "language-hl7",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "HL7 Support for Atom",
   "repository": {
     "type": "git",
     "url": "https://github.com/kelvix/language-hl7"
   },
   "bugs": {
-    "url": ""
+    "url": "https://github.com/probers1/language-hl7/issues"
   },
   "license": "MIT",
   "engines": {
