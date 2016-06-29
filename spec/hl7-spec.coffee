@@ -30,9 +30,9 @@ describe "HL7 grammar", ->
 
     expect(lines[0][61]).toEqual value: "333-33-3333", scopes: ["text.hl7", "support.variable.hl7.ssn"]
 
-  it "determines the patient id", ->
+  it "determines the accession Number", ->
     lines = grammar.tokenizeLines """
-      PID|1333|5M5-389423.4^^^&2.16.840.1.113883.3.779.1&ISO|454721||DOE^JOHN^^^^|DOE^JOHN^^^^|19480203|M||B|254 MYSTREET AVE^^MYTOWN^OH^44123^USA||(216)123-4567|||M|NON|400003403~1129086|333-33-3333|
+    OBR|1|ACC123456789|004174|300295^ABDOMEN 1 VIEW^XR||201606130901|201606130901||||L||ABDOMEN; 1 VIEW~{REASON FOR ABDOMEN: ABDOMINAL PAIN~{TRANSPORTATION:   IV?  N  O2?  N  IV PUMP?  N|||123456^LAST^FIRST||123456|XR|||||RAD|P||001^^^20160613090100^^R|123456~008100||||||||||||||||74000|
     """
 
-    expect(lines[0][4]).toEqual value: "5M5-389423.4^^^&2.16.840.1.113883.3.779.1&ISO", scopes: ["text.hl7", "support.function.hl7.patientId"]
+    expect(lines[0][4]).toEqual value: "ACC123456789", scopes: ["text.hl7", "support.function.hl7.accessionNum"]

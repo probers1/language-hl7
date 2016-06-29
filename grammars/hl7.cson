@@ -1,106 +1,120 @@
 fileTypes: [
-  "edi"
-  "hl7"
+    "edi"
+    "hl7"
 ]
 name: "HL7"
 patterns: [
-  {
-    ###
-    Very clearly identify HL7 segments so we can tell when them apart in the event
-    that they are get nested for some reason (it happens)
-    ###
-    comment: "SegmentOptions"
-    match: "(AL1|ACC|DG1|EVN|GT1|IN1|MSH|NK1|NTE|OBR|OBX|ORC|PID|PV1|PV2|FT1)"
-    name: "entity.name.type.hl7.segment"
-  }
-  {
-    ###
-    Identify HL7 characters that have been escaped.
-    ###
-    comment: "EscapeSequences"
-    match: "(\\\\.+\\\\)"
-    name: "constant.numeric.hl7.escape"
-  }
-  {
-    ###
-    Identify all HL7 special characters
-    ###
-    match: "(\\^|~|\\\\|&)"
-    name: "string.other.hl7.special.characters"
-  }
-  {
-    ###
-    Grabs the type of message and the associated trigger type
-    ###
-    begin: "(\\|)(ADT|MDM|MFN|PPR|OMG|ORU|ORM|REF|ACK|DFT)...."
-    beginCaptures:
-      "1":
+    {
+        ###
+        Very clearly identify HL7 segments so we can tell when them apart in the event
+        that they are get nested for some reason (it happens)
+        ###
+        comment: "SegmentOptions"
+        match: "(AL1|ACC|DG1|EVN|GT1|IN1|MSH|NK1|NTE|OBR|OBX|ORC|PID|PV1|PV2|FT1)"
+        name: "entity.name.type.hl7.segment"
+    }
+    {
+        ###
+        Identify HL7 characters that have been escaped.
+        ###
+        comment: "EscapeSequences"
+        match: "(\\\\.+\\\\)"
+        name: "constant.numeric.hl7.escape"
+    }
+    {
+        ###
+        Identify all HL7 special characters
+        ###
+        match: "(\\^|~|\\\\|&)"
+        name: "string.other.hl7.special.characters"
+    }
+    {
+        ###
+        Grabs the type of message and the associated trigger type
+        ###
+        begin: "(\\|)(ADT|MDM|MFN|PPR|OMG|ORU|ORM|REF|ACK|DFT)...."
+        beginCaptures:
+            "1":
+                name: "constant.character.hl7"
+            "2":
+                name: "support.function.hl7"
+        end: "(\\|)"
         name: "constant.character.hl7"
-      "2":
-        name: "support.function.hl7"
-    end: "(\\|)"
-    name: "constant.character.hl7"
-    patterns: [
-      {
-        captures:
-          "1":
-            name: "support.function.hl7"
-        match: "(.*?)"
-      }
-    ]
-  }
-  {
-    ###
-    HL7 follows YYYYMMDDHHMMSSsss
-    ###
-    comment: "DateTime"
-    match: "(((19|20)\\d\\d)(0?[1-9]|1[012])(0?[1-9]|[12][0-9]|3[01])([01]?[0-9]|2[0-3])?([0-5][0-9])?([0-5][0-9])?([0-5][0-9])?([0-9][0-9][0-9][0-9][0-9][0-9]?[0-9]?)?)"
-    name: "entity.other.inherited-class.hl7.datetime"
-  }
-  {
-    ###
-    Social for those of us in the states
-    ###
-    comment: "SSN"
-    begin: "(\\|)(\\d{3}(-?)\\d{2}(-?)\\d{4})(\\|)"
-    beginCaptures:
-      "1":
+        patterns: [
+            {
+                captures:
+                    "1":
+                        name: "support.function.hl7"
+                match: "(.*?)"
+            }
+        ]
+    }
+    {
+        ###
+        HL7 follows YYYYMMDDHHMMSSsss
+        ###
+        comment: "DateTime"
+        match: "(((19|20)\\d\\d)(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])([01]?[0-9]|2[0-3])?([0-5][0-9])?([0-5][0-9])?([0-5][0-9])?([0-9][0-9][0-9][0-9][0-9][0-9]?[0-9]?)?)"
+        name: "entity.other.inherited-class.hl7.datetime"
+    }
+    {
+        ###
+        Social for those of us in the states
+        ###
+        comment: "SSN"
+        begin: "(\\|)(\\d{3}(-?)\\d{2}(-?)\\d{4})(\\|)"
+        beginCaptures:
+            "1":
+                name: "constant.character.hl7"
+            "2":
+                name: "support.variable.hl7.ssn"
+        end: "(\\|)"
         name: "constant.character.hl7"
-      "2":
-        name: "support.variable.hl7.ssn"
-    end: "(\\|)"
-    name: "constant.character.hl7"
-    patterns: [
-      {
-        captures:
-          "1":
-            name: "support.variable.hl7.ssn"
-        match: "(.*?)"
-      }
-    ]
-  }
-  {
-    ###
-    Attempt to identify phone numbers country codes accounted for somewhat
-    ###
-    comment: "PhoneNum"
-    match: "([^\|]\\d{0,2}?\\(?\\d+{3}\\)?\\d{3}-?\\d{4})"
-    name: "support.function.hl7.phone"
-  }
-  {
-    ###
-    Identify all separators
-    ###
-    match: "(\\|)"
-    name: "constant.character.hl7.delimeter"
-  }
-  {
-    ###
-    Attempts to capture all instaces of where a patient id was found
-    ###
-    comment: "PatientIdentifier"
-    match: "(([A-Z0-9a-z\\-\\.]+(\\^\\^\\^)(.[^\\|^]+))+)"
-    name: "support.function.hl7.patientId"
-  }
+        patterns: [
+            {
+                captures:
+                    "1":
+                        name: "support.variable.hl7.ssn"
+                match: "(.*?)"
+            }
+        ]
+    }
+    {
+        ###
+        Attempt to identify phone numbers country codes accounted for somewhat
+        ###
+        comment: "PhoneNum"
+        match: "([^\|]\\d{0,2}?\\(?\\d+{3}\\)?\\d{3}-?\\d{4})"
+        name: "support.function.hl7.phone"
+    }
+    {
+        ###
+        Identify all separators
+        ###
+        match: "(\\|)"
+        name: "constant.character.hl7.delimeter"
+    }
+    {
+        ###
+        Attempts to capture all instaces of where accession number was found
+        ###
+        comment: "AccessionNumber"
+        begin: "(OBR|ORC\\|)(([A-Z0-9a-z\\-\\.]+(\\^\\^\\^)(.[^\\|^]+))+)(\\|)"
+        beginCaptures:
+            "1":
+                name: "constant.character.hl7"
+            "2":
+                name: "support.function.hl7.accessionNum"
+        end: "(\\|)"
+        name: "constant.character.hl7"
+        patterns: [
+            {
+                captures:
+                    "1":
+                        name: "support.function.hl7.accessionNum"
+                match: "(.*?)"
+            }
+        ]
+    }
 ]
 scopeName: "text.hl7"
