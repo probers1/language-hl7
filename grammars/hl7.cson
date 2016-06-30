@@ -95,25 +95,16 @@ patterns: [
                 ###
                 Grabs the type of message and the associated trigger type
                 ###
-                begin: '(\\|)(ADT|MDM|MFN|PPR|OMG|ORU|ORM|REF|ACK|DFT)....'
-                end: '(\\|)'
-                beginCaptures:
-                    '1':
-                        name: 'constant.character.hl7.delimeter'
-                    '2':
-                        name: 'support.function.hl7'
-                endCaptures:
-                    '1':
-                        name: 'constant.character.hl7.delimeter'
-                name: 'constant.character.hl7'
-                patterns: [
-                    {
-                        captures:
-                            '1':
-                                name: 'support.function.hl7'
-                        match: '(.*?)'
-                    }
-                ]
+              captures:
+                  '1':
+                      name: 'constant.character.hl7.delimeter'
+                  '2':
+                      name: 'support.function.hl7.mesgType'
+                  '3':
+                      name: 'string.other.hl7.special.characters'
+                  '4':
+                      name: 'support.function.hl7.mesgTrigger'
+                match: '(\\|)(ADT|MDM|MFN|PPR|OMG|ORU|ORM|REF|ACK|DFT)(\\^)(...)'
             }
         ]
     'dateTime':
