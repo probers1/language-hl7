@@ -23,13 +23,6 @@ patterns: [
     }
     {
         ###
-        Identify all HL7 special characters
-        ###
-        match: "(\\^|~|\\\\|&)"
-        name: "string.other.hl7.special.characters"
-    }
-    {
-        ###
         Grabs the type of message and the associated trigger type
         ###
         begin: "(\\|)(ADT|MDM|MFN|PPR|OMG|ORU|ORM|REF|ACK|DFT)...."
@@ -54,8 +47,51 @@ patterns: [
         HL7 follows YYYYMMDDHHMMSSsss
         ###
         comment: "DateTime"
-        match: "(((19|20)\\d\\d)(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])([01]?[0-9]|2[0-3])?([0-5][0-9])?([0-5][0-9])?([0-5][0-9])?([0-9][0-9][0-9][0-9][0-9][0-9]?[0-9]?)?)"
-        name: "entity.other.inherited-class.hl7.datetime"
+        begin: "(\\^)(((19|20)\\d\\d)(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])([01]?[0-9]|2[0-3])?([0-5][0-9])?([0-5][0-9])?([0-5][0-9])?([0-9][0-9][0-9][0-9][0-9][0-9]?[0-9]?)?)"
+        beginCaptures:
+            "1":
+                name: "string.other.hl7.special.characters"
+            "2":
+                name: "entity.other.inherited-class.hl7.datetime1"
+        end: "(((19|20)\\d\\d)(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])([01]?[0-9]|2[0-3])?([0-5][0-9])?([0-5][0-9])?([0-5][0-9])?([0-9][0-9][0-9][0-9][0-9][0-9]?[0-9]?)?)"
+        name: "entity.other.inherited-class.hl7.datetime1"
+        patterns: [
+            {
+                captures:
+                    "1":
+                        name: "entity.other.inherited-class.hl7.datetime1"
+                match: "(.*?)"
+            }
+        ]
+    }
+    {
+        ###
+        Identify all HL7 special characters
+        ###
+        match: "(\\^|~|\\\\|&)"
+        name: "string.other.hl7.special.characters"
+    }
+    {
+        ###
+        HL7 follows YYYYMMDDHHMMSSsss
+        ###
+        comment: "DateTime"
+        begin: "(\\|)(((19|20)\\d\\d)(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])([01]?[0-9]|2[0-3])?([0-5][0-9])?([0-5][0-9])?([0-5][0-9])?([0-9][0-9][0-9][0-9][0-9][0-9]?[0-9]?)?)"
+        beginCaptures:
+            "1":
+                name: "constant.character.hl7"
+            "2":
+                name: "entity.other.inherited-class.hl7.datetime2"
+        end: "(((19|20)\\d\\d)(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])([01]?[0-9]|2[0-3])?([0-5][0-9])?([0-5][0-9])?([0-5][0-9])?([0-9][0-9][0-9][0-9][0-9][0-9]?[0-9]?)?)"
+        name: "entity.other.inherited-class.hl7.datetime2"
+        patterns: [
+            {
+                captures:
+                    "1":
+                        name: "entity.other.inherited-class.hl7.datetime2"
+                match: "(.*?)"
+            }
+        ]
     }
     {
         ###
@@ -79,14 +115,14 @@ patterns: [
             }
         ]
     }
-    {
-        ###
-        Attempt to identify phone numbers country codes accounted for somewhat
-        ###
-        comment: "PhoneNum"
-        match: "([^\|]\\d{0,2}?\\(?\\d+{3}\\)?\\d{3}-?\\d{4})"
-        name: "support.function.hl7.phone"
-    }
+    # {
+    #     ###
+    #     Attempt to identify phone numbers country codes accounted for somewhat
+    #     ###
+    #     comment: "PhoneNum"
+    #     match: "([^\|]\\d{0,2}?\\(?\\d+{3}\\)?\\d{3}-?\\d{4})"
+    #     name: "support.function.hl7.phone"
+    # }
     {
         ###
         Identify all separators
@@ -99,7 +135,7 @@ patterns: [
         Attempts to capture all instaces of where accession number was found
         ###
         comment: "AccessionNumber"
-        begin: "(OBR|ORC\\|)(([A-Z0-9a-z\\-\\.]+(\\^\\^\\^)(.[^\\|^]+))+)(\\|)"
+        begin: "(OBR|ORC\\|)([a-zA-Z0-9]*)(\\|)"
         beginCaptures:
             "1":
                 name: "constant.character.hl7"
