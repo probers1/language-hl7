@@ -22,7 +22,9 @@ patterns: [
         match: '(\\\\.+\\\\)'
         name: 'constant.numeric.hl7.escape'
     }
-    {'include': '#messageType' }
+    {'include': '#messageType'}
+    {'include': '#phoneNumber'}
+    {'include': '#SSN'}
     {'include': '#dateTime'}
     {
         ###
@@ -31,31 +33,6 @@ patterns: [
         comment: 'SpecialCharacters'
         match: '(\\^|~|\\\\|&)'
         name: 'string.other.hl7.special.characters'
-    }
-    {
-        ###
-        Social for those of us in the states
-        ###
-        comment: 'SSN'
-        begin: '(\\|)(\\d{3}(-?)\\d{2}(-?)\\d{4})(\\|)'
-        end: '(\\|)'
-        beginCaptures:
-            '1':
-                name: 'constant.character.hl7.delimeter'
-            '2':
-                name: 'support.variable.hl7.ssn'
-        endCaptures:
-            '1':
-                name: 'constant.character.hl7.delimeter'
-        name: 'constant.character.hl7'
-        patterns: [
-            {
-                captures:
-                    '1':
-                        name: 'support.variable.hl7.ssn'
-                match: '(\\d{3}(-?)\\d{2}(-?)\\d{4})(\\|)'
-            }
-        ]
     }
     {
         ###
@@ -125,4 +102,29 @@ patterns: [
                         name: 'entity.other.inherited-class.hl7.datetime'
                 match: '(\\|)(((19|20)\\d\\d)(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])([01]?[0-9]|2[0-3])?([0-5][0-9])?([0-5][0-9])?([0-5][0-9])?([0-9][0-9][0-9][0-9][0-9])?)'
           }
+        ]
+    'phoneNumber':
+        'patterns': [
+            {
+              ###
+              Attempt to identify phone numbers country codes accounted for somewhat
+              ###
+              comment: "PhoneNum"
+              match: '\\b(\\d{0,2}?\\(?\\d{3}\\)?\\d{3}-?\\d{4})\\b'
+              name: 'support.function.hl7.phone'
+
+            }
+        ]
+    'SSN':
+        'patterns': [
+            {
+              captures:
+                  '1':
+                      name: 'constant.character.hl7.delimeter'
+                  '2':
+                      name: 'support.variable.hl7.ssn'
+                  '3':
+                      name: 'constant.character.hl7.delimeter'
+              match: '(\\|)(\\d{3}-?\\d{2}-?\\d{4})(\\|)'
+            }
         ]
