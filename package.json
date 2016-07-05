@@ -1,13 +1,13 @@
 {
-  "name": "language-hl7-pwr",
+  "name": "language-hl7-atom",
   "version": "0.2.1",
   "description": "HL7 Support for Atom",
   "repository": {
     "type": "git",
-    "url": "https://github.com/probers1/language-hl7"
+    "url": "https://github.com/probers1/language-hl7-atom"
   },
   "bugs": {
-    "url": "https://github.com/probers1/language-hl7/issues"
+    "url": "https://github.com/probers1/language-hl7-atom/issues"
   },
   "license": "MIT",
   "engines": {
