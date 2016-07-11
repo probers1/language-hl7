@@ -1,6 +1,6 @@
 {
   "name": "language-hl7-atom",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "description": "HL7 Support for Atom",
   "repository": {
     "type": "git",
