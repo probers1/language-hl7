@@ -11,7 +11,7 @@ patterns: [
         that they are get nested for some reason (it happens)
         ###
         comment: 'SegmentOptions'
-        match: '(AL1|ACC|DG1|DRG|EVN|GT1|IN1|IN2|MSH|NK1|NTE|OBR|OBX|ORC|PD1|PID|PR1|PV1|PV2|UB1|UB2|FT1)'
+        match: '(AL1|ACC|DG1|DRG|EVN|GT1|IN1|IN2|MSH|NK1|NTE|OBR|OBX|ORC|PD1|PID|PR1|PV1|PV2|ROL|UB1|UB2|FT1)'
         name: 'entity.name.type.hl7.segment'
     }
     {
